@@ -11,8 +11,7 @@
   --purple: #c7a6ff;
   --muted: #aaa6c3;
   --text: #f1edff;
-  --bg: #050611;
-  --border: rgba(177, 159, 255, 0.2);
+  --border: rgba(177,159,255,.2);
 }
 
 * {
@@ -30,8 +29,8 @@ body {
     #050611;
   color: var(--text);
   min-height: 100vh;
-  position: relative;
   overflow-x: hidden;
+  position: relative;
 }
 
 body::before {
@@ -79,6 +78,7 @@ option {
   font-size: 29px;
   font-weight: 900;
   letter-spacing: 2px;
+  animation: text-float 4.8s ease-in-out infinite;
 }
 
 .logo span {
@@ -88,6 +88,7 @@ option {
 .tagline {
   color: var(--muted);
   font-size: 13px;
+  animation: text-float 5.6s ease-in-out infinite .4s;
 }
 
 .hero {
@@ -107,6 +108,7 @@ option {
   font-size: 12px;
   font-weight: bold;
   margin-bottom: 20px;
+  animation: soft-glow 3.8s ease-in-out infinite;
 }
 
 h1 {
@@ -117,8 +119,9 @@ h1 {
 }
 
 h1 span {
+  display: inline-block;
   color: var(--purple);
-  text-shadow: 0 0 25px rgba(167,129,255,.35);
+  animation: title-float 4.5s ease-in-out infinite;
 }
 
 .intro {
@@ -178,12 +181,12 @@ h1 span {
   color: #171026;
   font-weight: bold;
   cursor: pointer;
-  transition: .2s;
+  transition: .25s;
 }
 
 .search-button:hover {
   background: #a88ae9;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 .options-row {
@@ -257,12 +260,12 @@ h1 span {
   background: rgba(13,14,34,.82);
   text-align: left;
   cursor: pointer;
-  transition: .2s;
+  transition: .25s;
   color: var(--text);
 }
 
 .tool-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-5px);
   border-color: var(--purple);
   box-shadow: 0 10px 28px rgba(0,0,0,.25),
               0 0 22px rgba(145,112,255,.1);
@@ -283,6 +286,11 @@ h1 span {
 .tool-card h3 {
   font-size: 15px;
   margin-bottom: 8px;
+  animation: text-float 5.2s ease-in-out infinite;
+}
+
+.tool-card:nth-child(even) h3 {
+  animation-delay: .7s;
 }
 
 .tool-card p {
@@ -304,13 +312,14 @@ h1 span {
   border-radius: 15px;
   text-align: left;
   cursor: pointer;
-  transition: .2s;
+  transition: .25s;
   color: var(--text);
 }
 
 .subject:hover {
   border-color: var(--purple);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px rgba(167,129,255,.1);
 }
 
 .subject .emoji {
@@ -323,6 +332,11 @@ h1 span {
   display: block;
   font-size: 15px;
   margin-bottom: 7px;
+  animation: text-float 5.2s ease-in-out infinite;
+}
+
+.subject:nth-child(even) strong {
+  animation-delay: .7s;
 }
 
 .subject small {
@@ -356,83 +370,115 @@ footer strong {
   color: var(--purple);
 }
 
-@media (max-width: 850px) {
-  .tool-grid {
-    grid-template-columns: repeat(3,minmax(0,1fr));
-  }
+/* HIỆU ỨNG CHỮ */
+@keyframes text-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
 
-  .subjects {
-    grid-template-columns: repeat(2,minmax(0,1fr));
+@keyframes title-float {
+  0%, 100% {
+    transform: translateY(0);
+    text-shadow: 0 0 18px rgba(167,129,255,.25);
+  }
+  50% {
+    transform: translateY(-5px);
+    text-shadow: 0 0 30px rgba(167,129,255,.65);
   }
 }
 
+@keyframes soft-glow {
+  0%, 100% { box-shadow: 0 0 0 rgba(167,129,255,0); }
+  50% { box-shadow: 0 0 22px rgba(167,129,255,.2); }
+}
+
+/* LỚP SAO BĂNG */
+#meteor-layer {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.shooting-star {
+  position: absolute;
+  width: 170px;
+  height: 2px;
+  border-radius: 50%;
+  opacity: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(195,178,255,.85),
+    #fff
+  );
+  box-shadow: 0 0 8px rgba(190,170,255,.8),
+              0 0 18px rgba(155,125,255,.45);
+  transform: rotate(-35deg);
+  animation: meteor-fly 1.35s ease-out forwards;
+}
+
+.shooting-star::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: -2px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 8px 2px #d8ccff;
+}
+
+@keyframes meteor-fly {
+  0% {
+    opacity: 0;
+    transform: translate3d(0,0,0) rotate(-35deg);
+  }
+  12% { opacity: 1; }
+  75% { opacity: .9; }
+  100% {
+    opacity: 0;
+    transform: translate3d(-360px,240px,0) rotate(-35deg);
+  }
+}
+
+@media (max-width: 850px) {
+  .tool-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .subjects { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+
 @media (max-width: 560px) {
-  .topbar {
-    min-height: 63px;
-    padding: 12px 5%;
-  }
+  .topbar { min-height: 63px; padding: 12px 5%; }
+  .logo { font-size: 25px; }
+  .tagline { font-size: 11px; }
+  .hero { padding: 36px 15px 28px; }
+  h1 { letter-spacing: -1px; }
+  .intro { font-size: 14px; }
+  .search-panel { padding: 15px; }
+  .search-row { flex-direction: column; }
+  #searchInput { width: 100%; }
+  .search-button { min-height: 47px; }
+  .options-row { grid-template-columns: 1fr; }
+  .tool-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+  .tool-card { padding: 14px 11px; }
+  .subjects { gap: 10px; }
+  .subject { padding: 14px 11px; }
+}
 
-  .logo {
-    font-size: 25px;
+@media (prefers-reduced-motion: reduce) {
+  .logo, .tagline, .hero h1 span, .eyebrow,
+  .tool-card h3, .subject strong {
+    animation: none !important;
   }
-
-  .tagline {
-    font-size: 11px;
-  }
-
-  .hero {
-    padding: 36px 15px 28px;
-  }
-
-  h1 {
-    letter-spacing: -1px;
-  }
-
-  .intro {
-    font-size: 14px;
-  }
-
-  .search-panel {
-    padding: 15px;
-  }
-
-  .search-row {
-    flex-direction: column;
-  }
-
-  #searchInput {
-    width: 100%;
-  }
-
-  .search-button {
-    min-height: 47px;
-  }
-
-  .options-row {
-    grid-template-columns: 1fr;
-  }
-
-  .tool-grid {
-    grid-template-columns: repeat(2,minmax(0,1fr));
-    gap: 10px;
-  }
-
-  .tool-card {
-    padding: 14px 11px;
-  }
-
-  .subjects {
-    gap: 10px;
-  }
-
-  .subject {
-    padding: 14px 11px;
-  }
+  .shooting-star { display: none !important; }
 }
 </style>
 </head>
 
 <body>
+
 <header class="topbar">
   <div class="logo">FLASH<span>.</span></div>
   <div class="tagline">Your learning space</div>
@@ -612,6 +658,46 @@ footer strong {
 <script>
 "use strict";
 
+/* SAO BĂNG BAY QUA KHI VỪA MỞ WEBSITE */
+(function createWelcomeMeteors() {
+  if (
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  ) return;
+
+  const layer = document.createElement("div");
+  layer.id = "meteor-layer";
+  layer.setAttribute("aria-hidden", "true");
+  document.body.appendChild(layer);
+
+  const meteors = [
+    { top: 12, left: 88, delay: 180 },
+    { top: 25, left: 72, delay: 520 },
+    { top: 8, left: 58, delay: 860 },
+    { top: 38, left: 96, delay: 1180 },
+    { top: 18, left: 43, delay: 1510 },
+    { top: 5, left: 80, delay: 1840 }
+  ];
+
+  meteors.forEach(function(item) {
+    window.setTimeout(function() {
+      const star = document.createElement("span");
+      star.className = "shooting-star";
+      star.style.top = item.top + "vh";
+      star.style.left = item.left + "vw";
+      layer.appendChild(star);
+
+      star.addEventListener("animationend", function() {
+        star.remove();
+      }, { once: true });
+    }, item.delay);
+  });
+
+  window.setTimeout(function() {
+    layer.remove();
+  }, 3600);
+})();
+
 const form = document.getElementById("searchForm");
 const searchInput = document.getElementById("searchInput");
 const toolSelect = document.getElementById("toolSelect");
@@ -719,7 +805,9 @@ function runSearch(selectedTool) {
   } else if (selectedTool === "gemini") {
     showStatus("Gemini đã được mở. Hãy nhập câu hỏi vào Gemini.");
   } else {
-    showStatus("Đã gửi từ khóa “" + query + "” tới " + toolNames[selectedTool] + ".");
+    showStatus(
+      "Đã gửi từ khóa “" + query + "” tới " + toolNames[selectedTool] + "."
+    );
   }
 }
 
