@@ -1,0 +1,546 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLASH - Không gian học tập</title>
+
+<style>
+:root {
+  --orange: #ff7a18;
+  --orange-light: #fff0e3;
+  --dark: #252525;
+  --muted: #737780;
+  --bg: #fffaf6;
+  --border: #f0e6de;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--dark);
+  min-height: 100vh;
+}
+button, input, select { font: inherit; }
+.topbar {
+  height: 72px;
+  padding: 0 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border-bottom: 1px solid var(--border);
+}
+.logo { color: var(--orange); font-size: 29px; font-weight: 900; letter-spacing: 2px; }
+.logo span { color: var(--dark); }
+.tagline { color: var(--muted); font-size: 13px; }
+
+.hero {
+  padding: 55px 20px 35px;
+  text-align: center;
+  max-width: 950px;
+  margin: auto;
+}
+.eyebrow {
+  display: inline-block;
+  background: var(--orange-light);
+  color: #b85000;
+  padding: 9px 15px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+h1 {
+  font-size: clamp(36px, 6vw, 60px);
+  line-height: 1.12;
+  letter-spacing: -2px;
+  margin-bottom: 18px;
+}
+h1 span { color: var(--orange); }
+.intro {
+  max-width: 650px;
+  margin: auto;
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 15px;
+}
+.search-panel {
+  width: min(850px, 92%);
+  margin: 0 auto;
+  padding: 22px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 12px 35px rgba(72,45,22,.06);
+}
+.search-label, .field label {
+  display: block;
+  text-align: left;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 9px;
+}
+.search-row { display: flex; gap: 10px; }
+#searchInput {
+  flex: 1;
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid #e7e0da;
+  border-radius: 11px;
+  outline: none;
+  background: #fffdfb;
+}
+#searchInput:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px #ff7a1820;
+}
+.search-button {
+  padding: 0 24px;
+  border: 0;
+  border-radius: 11px;
+  background: var(--orange);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+.search-button:hover { background: #e96508; }
+.options-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+.field select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e7e0da;
+  border-radius: 10px;
+  background: white;
+  color: var(--dark);
+}
+.hint {
+  margin-top: 13px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+  text-align: left;
+}
+#status {
+  display: none;
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #fff1e5;
+  color: #88400c;
+  font-size: 13px;
+  line-height: 1.7;
+  text-align: left;
+}
+.section { width: min(1100px, 90%); margin: auto; padding: 38px 0; }
+.section-heading { margin-bottom: 20px; }
+.section-heading h2 { font-size: 24px; margin-bottom: 7px; }
+.section-heading p { color: var(--muted); font-size: 13px; line-height: 1.6; }
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 13px;
+}
+.tool-card {
+  padding: 18px 15px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: white;
+  text-align: left;
+  cursor: pointer;
+  transition: .2s;
+  color: var(--dark);
+}
+.tool-card:hover {
+  transform: translateY(-3px);
+  border-color: #ffbd86;
+  box-shadow: 0 10px 22px #482d160d;
+}
+.tool-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--orange-light);
+  font-size: 23px;
+  margin-bottom: 13px;
+}
+.tool-card h3 { font-size: 15px; margin-bottom: 8px; }
+.tool-card p { color: var(--muted); font-size: 12px; line-height: 1.6; }
+.subjects {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 13px;
+}
+.subject {
+  padding: 19px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  text-align: left;
+  cursor: pointer;
+  transition: .2s;
+  color: var(--dark);
+}
+.subject:hover { border-color: var(--orange); transform: translateY(-2px); }
+.subject .emoji { display: block; font-size: 25px; margin-bottom: 12px; }
+.subject strong { display: block; font-size: 15px; margin-bottom: 7px; }
+.subject small { color: var(--muted); line-height: 1.6; }
+.note {
+  margin-top: 20px;
+  padding: 16px;
+  background: #fff1e5;
+  border-radius: 12px;
+  color: #71411f;
+  font-size: 13px;
+  line-height: 1.8;
+}
+footer {
+  margin-top: 20px;
+  padding: 27px 15px;
+  background: white;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+footer strong { color: var(--orange); }
+
+@media (max-width: 850px) {
+  .tool-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .subjects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .topbar { height: 63px; padding: 0 5%; }
+  .logo { font-size: 25px; }
+  .tagline { font-size: 11px; }
+  .hero { padding: 36px 15px 28px; }
+  h1 { letter-spacing: -1px; }
+  .intro { font-size: 14px; }
+  .search-panel { padding: 15px; }
+  .search-row { flex-direction: column; }
+  #searchInput { width: 100%; }
+  .search-button { min-height: 47px; }
+  .options-row { grid-template-columns: 1fr; }
+  .tool-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .tool-card { padding: 14px 11px; }
+  .subjects { gap: 10px; }
+  .subject { padding: 14px 11px; }
+}
+</style>
+</head>
+
+<body>
+<header class="topbar">
+  <div class="logo">FLASH<span>.</span></div>
+  <div class="tagline">Your learning space</div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow">✦ KHÔNG GIAN HỌC TẬP THÔNG MINH</div>
+    <h1>Học tập theo cách<br><span>của bạn.</span></h1>
+    <p class="intro">
+      Tìm kiếm kiến thức, xem bài giảng, hỏi AI và khám phá
+      mô phỏng khoa học từ một không gian học tập duy nhất.
+    </p>
+  </section>
+
+  <section class="search-panel">
+    <form id="searchForm">
+      <label class="search-label" for="searchInput">Bạn muốn tìm hiểu điều gì?</label>
+      <div class="search-row">
+        <input id="searchInput" type="search"
+          placeholder="Ví dụ: dao động cưỡng bức, phản ứng hóa học..."
+          autocomplete="off" required>
+        <button class="search-button" type="submit">Tìm kiếm ↗</button>
+      </div>
+
+      <div class="options-row">
+        <div class="field">
+          <label for="toolSelect">Chọn công cụ</label>
+          <select id="toolSelect">
+            <option value="all">Tất cả công cụ</option>
+            <option value="google">Google</option>
+            <option value="youtube">YouTube</option>
+            <option value="chatgpt">ChatGPT</option>
+            <option value="gemini">Gemini</option>
+            <option value="phet">PhET mô phỏng</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="subjectSelect">Môn học (không bắt buộc)</label>
+          <select id="subjectSelect">
+            <option value="">Tất cả môn học</option>
+            <option value="Vật lí">Vật lí</option>
+            <option value="Hóa học">Hóa học</option>
+            <option value="Toán học">Toán học</option>
+            <option value="Sinh học">Sinh học</option>
+            <option value="Tin học">Tin học</option>
+            <option value="Tiếng Anh">Tiếng Anh</option>
+            <option value="Lịch sử">Lịch sử</option>
+            <option value="Ngữ văn">Ngữ văn</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="hint">
+        Nhập từ khóa rồi chọn công cụ. Nếu chọn “Tất cả công cụ”,
+        trang sẽ thử mở từng công cụ trong tab riêng.
+      </p>
+      <div id="status" role="status" aria-live="polite"></div>
+    </form>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2>Công cụ học tập</h2>
+      <p>Chọn nhanh công cụ bạn muốn sử dụng.</p>
+    </div>
+
+    <div class="tool-grid">
+      <button class="tool-card" type="button" data-tool="google">
+        <div class="tool-icon">🔎</div>
+        <h3>Google</h3>
+        <p>Tìm tài liệu và nguồn tham khảo.</p>
+      </button>
+      <button class="tool-card" type="button" data-tool="youtube">
+        <div class="tool-icon">▶️</div>
+        <h3>YouTube</h3>
+        <p>Tìm bài giảng và video hướng dẫn.</p>
+      </button>
+      <button class="tool-card" type="button" data-tool="chatgpt">
+        <div class="tool-icon">🤖</div>
+        <h3>ChatGPT</h3>
+        <p>Hỏi đáp và giải thích kiến thức.</p>
+      </button>
+      <button class="tool-card" type="button" data-tool="gemini">
+        <div class="tool-icon">✨</div>
+        <h3>Gemini</h3>
+        <p>Khám phá kiến thức với AI.</p>
+      </button>
+      <button class="tool-card" type="button" data-tool="phet">
+        <div class="tool-icon">🧪</div>
+        <h3>PhET</h3>
+        <p>Khám phá mô phỏng khoa học.</p>
+      </button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2>Khám phá theo môn học</h2>
+      <p>Chọn môn để thêm môn học vào nội dung tìm kiếm.</p>
+    </div>
+
+    <div class="subjects">
+      <button class="subject" type="button" data-subject="Vật lí">
+        <span class="emoji">⚡</span><strong>Vật lí</strong>
+        <small>Chuyển động, lực và năng lượng.</small>
+      </button>
+      <button class="subject" type="button" data-subject="Hóa học">
+        <span class="emoji">🧪</span><strong>Hóa học</strong>
+        <small>Nguyên tử, phản ứng và dung dịch.</small>
+      </button>
+      <button class="subject" type="button" data-subject="Toán học">
+        <span class="emoji">📐</span><strong>Toán học</strong>
+        <small>Đại số và hình học.</small>
+      </button>
+      <button class="subject" type="button" data-subject="Sinh học">
+        <span class="emoji">🌱</span><strong>Sinh học</strong>
+        <small>Tế bào và thế giới sống.</small>
+      </button>
+      <button class="subject" type="button" data-subject="Tin học">
+        <span class="emoji">💻</span><strong>Tin học</strong>
+        <small>Lập trình và công nghệ.</small>
+      </button>
+      <button class="subject" type="button" data-subject="Tiếng Anh">
+        <span class="emoji">🌐</span><strong>Tiếng Anh</strong>
+        <small>Từ vựng và ngữ pháp.</small>
+      </button>
+      <button class="subject" type="button" data-subject="Lịch sử">
+        <span class="emoji">🏛️</span><strong>Lịch sử</strong>
+        <small>Sự kiện và các thời kỳ.</small>
+      </button>
+      <button class="subject" type="button" data-subject="Ngữ văn">
+        <span class="emoji">📚</span><strong>Ngữ văn</strong>
+        <small>Tác phẩm và phân tích văn học.</small>
+      </button>
+    </div>
+
+    <div class="note">
+      <strong>Lưu ý về PhET:</strong>
+      Nút PhET mở danh mục mô phỏng chính thức bằng tiếng Việt.
+      Sau khi trang mở, hãy dùng ô tìm kiếm trên trang PhET để tìm mô phỏng.
+      FLASH không thể tự lọc kết quả bên trong website PhET nếu PhET không
+      cung cấp một đường dẫn tìm kiếm tương thích.
+    </div>
+  </section>
+</main>
+
+<footer>
+  <strong>FLASH.</strong> — Không gian học tập của bạn.<br>
+  Tìm kiếm, khám phá và học hỏi mỗi ngày.
+</footer>
+
+<script>
+"use strict";
+
+const form = document.getElementById("searchForm");
+const searchInput = document.getElementById("searchInput");
+const toolSelect = document.getElementById("toolSelect");
+const subjectSelect = document.getElementById("subjectSelect");
+const statusBox = document.getElementById("status");
+
+const toolNames = {
+  google: "Google",
+  youtube: "YouTube",
+  chatgpt: "ChatGPT",
+  gemini: "Gemini",
+  phet: "PhET"
+};
+
+function showStatus(message) {
+  statusBox.textContent = message;
+  statusBox.style.display = "block";
+}
+
+function getSearchTerm() {
+  const keyword = searchInput.value.trim();
+  const subject = subjectSelect.value.trim();
+
+  if (!keyword) {
+    searchInput.focus();
+    showStatus("Hãy nhập nội dung muốn tìm.");
+    return "";
+  }
+
+  if (subject && !keyword.toLocaleLowerCase().includes(subject.toLocaleLowerCase())) {
+    return subject + " " + keyword;
+  }
+
+  return keyword;
+}
+
+function getToolUrl(tool, query) {
+  const encoded = encodeURIComponent(query);
+
+  switch (tool) {
+    case "google":
+      return "https://www.google.com/search?q=" + encoded;
+
+    case "youtube":
+      return "https://www.youtube.com/results?search_query=" + encoded;
+
+    case "chatgpt":
+      return "https://chatgpt.com/?q=" + encoded;
+
+    case "gemini":
+      return "https://gemini.google.com/app";
+
+    case "phet":
+      // Đường dẫn danh mục PhET chính thức bằng tiếng Việt.
+      return "https://phet.colorado.edu/in/simulations/filter?locale=vi";
+
+    default:
+      return "";
+  }
+}
+
+function runSearch(selectedTool) {
+  const query = getSearchTerm();
+  if (!query) return;
+
+  // PhET được xử lý riêng để tránh báo rằng từ khóa đã được lọc tự động.
+  if (selectedTool === "phet") {
+    window.open(
+      "https://phet.colorado.edu/in/simulations/filter?locale=vi",
+      "_blank",
+      "noopener,noreferrer"
+    );
+
+    showStatus(
+      "Đã mở kho mô phỏng PhET chính thức. Hãy nhập “" + query +
+      "” vào ô tìm kiếm trên trang PhET để tìm mô phỏng tương ứng."
+    );
+    return;
+  }
+
+  const tools = selectedTool === "all"
+    ? ["google", "youtube", "chatgpt", "gemini"]
+    : [selectedTool];
+
+  const blocked = [];
+
+  tools.forEach(function(tool) {
+    const url = getToolUrl(tool, query);
+    if (!url) return;
+
+    const tab = window.open(url, "_blank", "noopener,noreferrer");
+    if (!tab) blocked.push(toolNames[tool]);
+  });
+
+  if (selectedTool === "all") {
+    showStatus(
+      "Đã gửi từ khóa “" + query + "” tới các công cụ được hỗ trợ. " +
+      "Gemini mở trang chính để bạn nhập câu hỏi. " +
+      (blocked.length
+        ? "Trình duyệt có thể đã chặn tab: " + blocked.join(", ") +
+          ". Hãy cho phép cửa sổ bật lên."
+        : "Nếu tab không xuất hiện, hãy kiểm tra cài đặt chặn cửa sổ bật lên.")
+    );
+  } else if (selectedTool === "gemini") {
+    showStatus("Gemini đã được mở. Hãy nhập câu hỏi vào Gemini.");
+  } else {
+    showStatus("Đã gửi từ khóa “" + query + "” tới " + toolNames[selectedTool] + ".");
+  }
+}
+
+form.addEventListener("submit", function(event) {
+  event.preventDefault();
+  runSearch(toolSelect.value);
+});
+
+document.querySelectorAll("[data-tool]").forEach(function(button) {
+  button.addEventListener("click", function() {
+    const tool = button.dataset.tool;
+    toolSelect.value = tool;
+    searchInput.focus();
+
+    if (searchInput.value.trim()) {
+      runSearch(tool);
+    } else {
+      showStatus("Đã chọn " + toolNames[tool] + ". Nhập từ khóa rồi bấm Tìm kiếm.");
+    }
+  });
+});
+
+document.querySelectorAll("[data-subject]").forEach(function(button) {
+  button.addEventListener("click", function() {
+    const subject = button.dataset.subject;
+    subjectSelect.value = subject;
+
+    if (!searchInput.value.trim()) {
+      searchInput.value = subject + " ";
+    } else if (
+      !searchInput.value.toLocaleLowerCase().includes(subject.toLocaleLowerCase())
+    ) {
+      searchInput.value = subject + " " + searchInput.value;
+    }
+
+    searchInput.focus();
+    showStatus("Đã chọn môn " + subject + ". Bổ sung từ khóa rồi bấm Tìm kiếm.");
+  });
+});
+</script>
+</body>
+</html>
