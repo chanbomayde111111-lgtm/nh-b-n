@@ -4,37 +4,91 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FLASH - Không gian học tập</title>
+<title>FLASH - Đừng để tình yêu cản bước học tập</title>
 
 <style>
 :root {
-  --orange: #ff7a18;
-  --orange-light: #fff0e3;
-  --dark: #252525;
-  --muted: #737780;
-  --bg: #fffaf6;
-  --border: #f0e6de;
+  --purple: #c7a6ff;
+  --muted: #aaa6c3;
+  --text: #f1edff;
+  --bg: #050611;
+  --border: rgba(177, 159, 255, 0.2);
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background: var(--bg);
-  color: var(--dark);
+  background:
+    radial-gradient(ellipse at 18% 12%, rgba(82,62,153,.22), transparent 34%),
+    radial-gradient(ellipse at 82% 30%, rgba(39,73,139,.17), transparent 35%),
+    radial-gradient(ellipse at 50% 78%, rgba(91,49,128,.12), transparent 40%),
+    #050611;
+  color: var(--text);
   min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
 }
-button, input, select { font: inherit; }
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1px 1px at 8% 18%, white 99%, transparent),
+    radial-gradient(1px 1px at 21% 72%, #cabeff 99%, transparent),
+    radial-gradient(2px 2px at 33% 35%, white 99%, transparent),
+    radial-gradient(1px 1px at 47% 12%, white 99%, transparent),
+    radial-gradient(1px 1px at 59% 63%, #cabeff 99%, transparent),
+    radial-gradient(2px 2px at 72% 24%, white 99%, transparent),
+    radial-gradient(1px 1px at 86% 78%, white 99%, transparent),
+    radial-gradient(1px 1px at 94% 43%, #cabeff 99%, transparent);
+  background-size: 370px 290px;
+  opacity: .72;
+}
+
+button, input, select {
+  font: inherit;
+}
+
+option {
+  background: #0b0c20;
+  color: var(--text);
+}
+
 .topbar {
-  height: 72px;
-  padding: 0 7%;
+  min-height: 72px;
+  padding: 14px 7%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: white;
+  gap: 15px;
+  background: rgba(8,9,25,.82);
+  backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
 }
-.logo { color: var(--orange); font-size: 29px; font-weight: 900; letter-spacing: 2px; }
-.logo span { color: var(--dark); }
-.tagline { color: var(--muted); font-size: 13px; }
+
+.logo {
+  color: var(--purple);
+  font-size: 29px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.logo span {
+  color: #8c79c9;
+}
+
+.tagline {
+  color: var(--muted);
+  font-size: 13px;
+}
 
 .hero {
   padding: 55px 20px 35px;
@@ -42,23 +96,31 @@ button, input, select { font: inherit; }
   max-width: 950px;
   margin: auto;
 }
+
 .eyebrow {
   display: inline-block;
-  background: var(--orange-light);
-  color: #b85000;
+  background: rgba(167,129,255,.13);
+  color: #d6c4ff;
+  border: 1px solid var(--border);
   padding: 9px 15px;
   border-radius: 30px;
   font-size: 12px;
   font-weight: bold;
   margin-bottom: 20px;
 }
+
 h1 {
-  font-size: clamp(36px, 6vw, 60px);
+  font-size: clamp(36px,6vw,60px);
   line-height: 1.12;
   letter-spacing: -2px;
   margin-bottom: 18px;
 }
-h1 span { color: var(--orange); }
+
+h1 span {
+  color: var(--purple);
+  text-shadow: 0 0 25px rgba(167,129,255,.35);
+}
+
 .intro {
   max-width: 650px;
   margin: auto;
@@ -66,15 +128,19 @@ h1 span { color: var(--orange); }
   line-height: 1.8;
   font-size: 15px;
 }
+
 .search-panel {
-  width: min(850px, 92%);
+  width: min(850px,92%);
   margin: 0 auto;
   padding: 22px;
-  background: white;
+  background: rgba(13,14,34,.82);
   border: 1px solid var(--border);
   border-radius: 20px;
-  box-shadow: 0 12px 35px rgba(72,45,22,.06);
+  box-shadow: 0 12px 45px rgba(0,0,0,.28),
+              0 0 35px rgba(115,83,210,.08);
+  backdrop-filter: blur(14px);
 }
+
 .search-label, .field label {
   display: block;
   text-align: left;
@@ -82,44 +148,60 @@ h1 span { color: var(--orange); }
   font-weight: bold;
   margin-bottom: 9px;
 }
-.search-row { display: flex; gap: 10px; }
+
+.search-row {
+  display: flex;
+  gap: 10px;
+}
+
 #searchInput {
   flex: 1;
   min-width: 0;
   padding: 15px;
-  border: 1px solid #e7e0da;
+  border: 1px solid rgba(177,159,255,.24);
   border-radius: 11px;
   outline: none;
-  background: #fffdfb;
+  background: rgba(5,6,17,.9);
+  color: var(--text);
 }
+
 #searchInput:focus {
-  border-color: var(--orange);
-  box-shadow: 0 0 0 3px #ff7a1820;
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(167,129,255,.16);
 }
+
 .search-button {
   padding: 0 24px;
   border: 0;
   border-radius: 11px;
-  background: var(--orange);
-  color: white;
+  background: var(--purple);
+  color: #171026;
   font-weight: bold;
   cursor: pointer;
+  transition: .2s;
 }
-.search-button:hover { background: #e96508; }
+
+.search-button:hover {
+  background: #a88ae9;
+  transform: translateY(-1px);
+}
+
 .options-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
   margin-top: 16px;
 }
+
 .field select {
   width: 100%;
   padding: 12px;
-  border: 1px solid #e7e0da;
+  border: 1px solid var(--border);
   border-radius: 10px;
-  background: white;
-  color: var(--dark);
+  background: #0b0c20;
+  color: var(--text);
 }
+
 .hint {
   margin-top: 13px;
   color: var(--muted);
@@ -127,113 +209,225 @@ h1 span { color: var(--orange); }
   line-height: 1.7;
   text-align: left;
 }
+
 #status {
   display: none;
   margin-top: 14px;
   padding: 12px;
   border-radius: 10px;
-  background: #fff1e5;
-  color: #88400c;
+  background: rgba(105,77,169,.18);
+  color: #ded3ff;
+  border: 1px solid var(--border);
   font-size: 13px;
   line-height: 1.7;
   text-align: left;
 }
-.section { width: min(1100px, 90%); margin: auto; padding: 38px 0; }
-.section-heading { margin-bottom: 20px; }
-.section-heading h2 { font-size: 24px; margin-bottom: 7px; }
-.section-heading p { color: var(--muted); font-size: 13px; line-height: 1.6; }
+
+.section {
+  width: min(1100px,90%);
+  margin: auto;
+  padding: 38px 0;
+}
+
+.section-heading {
+  margin-bottom: 20px;
+}
+
+.section-heading h2 {
+  font-size: 24px;
+  margin-bottom: 7px;
+}
+
+.section-heading p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
 .tool-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(5,minmax(0,1fr));
   gap: 13px;
 }
+
 .tool-card {
   padding: 18px 15px;
   border: 1px solid var(--border);
   border-radius: 16px;
-  background: white;
+  background: rgba(13,14,34,.82);
   text-align: left;
   cursor: pointer;
   transition: .2s;
-  color: var(--dark);
+  color: var(--text);
 }
+
 .tool-card:hover {
   transform: translateY(-3px);
-  border-color: #ffbd86;
-  box-shadow: 0 10px 22px #482d160d;
+  border-color: var(--purple);
+  box-shadow: 0 10px 28px rgba(0,0,0,.25),
+              0 0 22px rgba(145,112,255,.1);
 }
+
 .tool-icon {
   width: 44px;
   height: 44px;
   display: grid;
   place-items: center;
   border-radius: 12px;
-  background: var(--orange-light);
+  background: rgba(167,129,255,.14);
+  border: 1px solid var(--border);
   font-size: 23px;
   margin-bottom: 13px;
 }
-.tool-card h3 { font-size: 15px; margin-bottom: 8px; }
-.tool-card p { color: var(--muted); font-size: 12px; line-height: 1.6; }
+
+.tool-card h3 {
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.tool-card p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
 .subjects {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(4,minmax(0,1fr));
   gap: 13px;
 }
+
 .subject {
   padding: 19px;
-  background: white;
+  background: rgba(13,14,34,.76);
   border: 1px solid var(--border);
   border-radius: 15px;
   text-align: left;
   cursor: pointer;
   transition: .2s;
-  color: var(--dark);
+  color: var(--text);
 }
-.subject:hover { border-color: var(--orange); transform: translateY(-2px); }
-.subject .emoji { display: block; font-size: 25px; margin-bottom: 12px; }
-.subject strong { display: block; font-size: 15px; margin-bottom: 7px; }
-.subject small { color: var(--muted); line-height: 1.6; }
+
+.subject:hover {
+  border-color: var(--purple);
+  transform: translateY(-2px);
+}
+
+.subject .emoji {
+  display: block;
+  font-size: 25px;
+  margin-bottom: 12px;
+}
+
+.subject strong {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 7px;
+}
+
+.subject small {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
 .note {
   margin-top: 20px;
   padding: 16px;
-  background: #fff1e5;
+  background: rgba(105,77,169,.16);
+  border: 1px solid var(--border);
   border-radius: 12px;
-  color: #71411f;
+  color: #d5caff;
   font-size: 13px;
   line-height: 1.8;
 }
+
 footer {
   margin-top: 20px;
   padding: 27px 15px;
-  background: white;
+  background: rgba(8,9,25,.88);
   border-top: 1px solid var(--border);
   text-align: center;
   color: var(--muted);
   font-size: 13px;
   line-height: 1.8;
 }
-footer strong { color: var(--orange); }
+
+footer strong {
+  color: var(--purple);
+}
 
 @media (max-width: 850px) {
-  .tool-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .subjects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tool-grid {
+    grid-template-columns: repeat(3,minmax(0,1fr));
+  }
+
+  .subjects {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
 }
+
 @media (max-width: 560px) {
-  .topbar { height: 63px; padding: 0 5%; }
-  .logo { font-size: 25px; }
-  .tagline { font-size: 11px; }
-  .hero { padding: 36px 15px 28px; }
-  h1 { letter-spacing: -1px; }
-  .intro { font-size: 14px; }
-  .search-panel { padding: 15px; }
-  .search-row { flex-direction: column; }
-  #searchInput { width: 100%; }
-  .search-button { min-height: 47px; }
-  .options-row { grid-template-columns: 1fr; }
-  .tool-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-  .tool-card { padding: 14px 11px; }
-  .subjects { gap: 10px; }
-  .subject { padding: 14px 11px; }
+  .topbar {
+    min-height: 63px;
+    padding: 12px 5%;
+  }
+
+  .logo {
+    font-size: 25px;
+  }
+
+  .tagline {
+    font-size: 11px;
+  }
+
+  .hero {
+    padding: 36px 15px 28px;
+  }
+
+  h1 {
+    letter-spacing: -1px;
+  }
+
+  .intro {
+    font-size: 14px;
+  }
+
+  .search-panel {
+    padding: 15px;
+  }
+
+  .search-row {
+    flex-direction: column;
+  }
+
+  #searchInput {
+    width: 100%;
+  }
+
+  .search-button {
+    min-height: 47px;
+  }
+
+  .options-row {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 10px;
+  }
+
+  .tool-card {
+    padding: 14px 11px;
+  }
+
+  .subjects {
+    gap: 10px;
+  }
+
+  .subject {
+    padding: 14px 11px;
+  }
 }
 </style>
 </head>
@@ -246,8 +440,8 @@ footer strong { color: var(--orange); }
 
 <main>
   <section class="hero">
-    <div class="eyebrow">✦ KHÔNG GIAN HỌC TẬP THÔNG MINH</div>
-    <h1>Học tập theo cách<br><span>của bạn.</span></h1>
+    <div class="eyebrow">✦ HỌC TẬP DƯỚI BẦU TRỜI ĐÊM</div>
+    <h1>Đừng để tình yêu<br><span>cản bước học tập.</span></h1>
     <p class="intro">
       Tìm kiếm kiến thức, xem bài giảng, hỏi AI và khám phá
       mô phỏng khoa học từ một không gian học tập duy nhất.
@@ -256,7 +450,10 @@ footer strong { color: var(--orange); }
 
   <section class="search-panel">
     <form id="searchForm">
-      <label class="search-label" for="searchInput">Bạn muốn tìm hiểu điều gì?</label>
+      <label class="search-label" for="searchInput">
+        Bạn muốn tìm hiểu điều gì?
+      </label>
+
       <div class="search-row">
         <input id="searchInput" type="search"
           placeholder="Ví dụ: dao động cưỡng bức, phản ứng hóa học..."
@@ -297,6 +494,7 @@ footer strong { color: var(--orange); }
         Nhập từ khóa rồi chọn công cụ. Nếu chọn “Tất cả công cụ”,
         trang sẽ thử mở từng công cụ trong tab riêng.
       </p>
+
       <div id="status" role="status" aria-live="polite"></div>
     </form>
   </section>
@@ -313,21 +511,25 @@ footer strong { color: var(--orange); }
         <h3>Google</h3>
         <p>Tìm tài liệu và nguồn tham khảo.</p>
       </button>
+
       <button class="tool-card" type="button" data-tool="youtube">
         <div class="tool-icon">▶️</div>
         <h3>YouTube</h3>
         <p>Tìm bài giảng và video hướng dẫn.</p>
       </button>
+
       <button class="tool-card" type="button" data-tool="chatgpt">
         <div class="tool-icon">🤖</div>
         <h3>ChatGPT</h3>
         <p>Hỏi đáp và giải thích kiến thức.</p>
       </button>
+
       <button class="tool-card" type="button" data-tool="gemini">
         <div class="tool-icon">✨</div>
         <h3>Gemini</h3>
         <p>Khám phá kiến thức với AI.</p>
       </button>
+
       <button class="tool-card" type="button" data-tool="phet">
         <div class="tool-icon">🧪</div>
         <h3>PhET</h3>
@@ -344,35 +546,50 @@ footer strong { color: var(--orange); }
 
     <div class="subjects">
       <button class="subject" type="button" data-subject="Vật lí">
-        <span class="emoji">⚡</span><strong>Vật lí</strong>
+        <span class="emoji">⚡</span>
+        <strong>Vật lí</strong>
         <small>Chuyển động, lực và năng lượng.</small>
       </button>
+
       <button class="subject" type="button" data-subject="Hóa học">
-        <span class="emoji">🧪</span><strong>Hóa học</strong>
+        <span class="emoji">🧪</span>
+        <strong>Hóa học</strong>
         <small>Nguyên tử, phản ứng và dung dịch.</small>
       </button>
+
       <button class="subject" type="button" data-subject="Toán học">
-        <span class="emoji">📐</span><strong>Toán học</strong>
+        <span class="emoji">📐</span>
+        <strong>Toán học</strong>
         <small>Đại số và hình học.</small>
       </button>
+
       <button class="subject" type="button" data-subject="Sinh học">
-        <span class="emoji">🌱</span><strong>Sinh học</strong>
+        <span class="emoji">🌱</span>
+        <strong>Sinh học</strong>
         <small>Tế bào và thế giới sống.</small>
       </button>
+
       <button class="subject" type="button" data-subject="Tin học">
-        <span class="emoji">💻</span><strong>Tin học</strong>
+        <span class="emoji">💻</span>
+        <strong>Tin học</strong>
         <small>Lập trình và công nghệ.</small>
       </button>
+
       <button class="subject" type="button" data-subject="Tiếng Anh">
-        <span class="emoji">🌐</span><strong>Tiếng Anh</strong>
+        <span class="emoji">🌐</span>
+        <strong>Tiếng Anh</strong>
         <small>Từ vựng và ngữ pháp.</small>
       </button>
+
       <button class="subject" type="button" data-subject="Lịch sử">
-        <span class="emoji">🏛️</span><strong>Lịch sử</strong>
+        <span class="emoji">🏛️</span>
+        <strong>Lịch sử</strong>
         <small>Sự kiện và các thời kỳ.</small>
       </button>
+
       <button class="subject" type="button" data-subject="Ngữ văn">
-        <span class="emoji">📚</span><strong>Ngữ văn</strong>
+        <span class="emoji">📚</span>
+        <strong>Ngữ văn</strong>
         <small>Tác phẩm và phân tích văn học.</small>
       </button>
     </div>
@@ -424,7 +641,10 @@ function getSearchTerm() {
     return "";
   }
 
-  if (subject && !keyword.toLocaleLowerCase().includes(subject.toLocaleLowerCase())) {
+  if (
+    subject &&
+    !keyword.toLocaleLowerCase().includes(subject.toLocaleLowerCase())
+  ) {
     return subject + " " + keyword;
   }
 
@@ -448,7 +668,6 @@ function getToolUrl(tool, query) {
       return "https://gemini.google.com/app";
 
     case "phet":
-      // Đường dẫn danh mục PhET chính thức bằng tiếng Việt.
       return "https://phet.colorado.edu/in/simulations/filter?locale=vi";
 
     default:
@@ -460,7 +679,6 @@ function runSearch(selectedTool) {
   const query = getSearchTerm();
   if (!query) return;
 
-  // PhET được xử lý riêng để tránh báo rằng từ khóa đã được lọc tự động.
   if (selectedTool === "phet") {
     window.open(
       "https://phet.colorado.edu/in/simulations/filter?locale=vi",
@@ -519,7 +737,10 @@ document.querySelectorAll("[data-tool]").forEach(function(button) {
     if (searchInput.value.trim()) {
       runSearch(tool);
     } else {
-      showStatus("Đã chọn " + toolNames[tool] + ". Nhập từ khóa rồi bấm Tìm kiếm.");
+      showStatus(
+        "Đã chọn " + toolNames[tool] +
+        ". Nhập từ khóa rồi bấm Tìm kiếm."
+      );
     }
   });
 });
@@ -538,7 +759,10 @@ document.querySelectorAll("[data-subject]").forEach(function(button) {
     }
 
     searchInput.focus();
-    showStatus("Đã chọn môn " + subject + ". Bổ sung từ khóa rồi bấm Tìm kiếm.");
+    showStatus(
+      "Đã chọn môn " + subject +
+      ". Bổ sung từ khóa rồi bấm Tìm kiếm."
+    );
   });
 });
 </script>
